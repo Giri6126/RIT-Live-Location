@@ -17,6 +17,7 @@ How the System Works (Full Flow)
 Contribution Guide
 
 Future Enhancements
+
 🧭 1. Overview
 This project solves a real problem for college students — no more waiting for the bus blindly.
 The system has three interfaces:
