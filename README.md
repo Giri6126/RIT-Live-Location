@@ -81,6 +81,7 @@ live_locations → every GPS update
 arrival_logs → arrival timestamps
 
 4. Folder Structure
+
 RIT-Live-Location/
 │
 ├── app.py                     # Flask backend
