@@ -121,6 +121,7 @@ JavaScript
 Google Maps API
 
 How the System Works (Full Flow Summary)
+
 Driver Side
 Driver chooses bus
 Clicks Start Sharing
