@@ -90,7 +90,7 @@ RIT-Live-Location/
 ├── requirements.txt           # Python dependencies
 ├── README.md                  # Project documentation
 │
-├── templates/                 # Frontend HTML files
+├── templates/                 # Frontend HTML
 │   ├── base.html
 │   ├── index.html
 │   ├── driver.html
