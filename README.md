@@ -3,7 +3,7 @@
 Real-time bus tracking system for Rajalakshmi Institute of Technology (RIT) — built using Flask (Python), MySQL, HTML/CSS, and JavaScript.
 This project enables drivers to share live GPS, and students to track their bus in real-time.
 
-📑 Table of Contents
+Table of Contents
 Overview
 Features
 Project Architecture
