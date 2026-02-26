@@ -17,26 +17,26 @@ Contribution Guide
 
 Future Enhancements
 
-🧭 1. Overview
+ 1. Overview
 This project solves a real problem for college students — no more waiting for the bus blindly.
 The system has three interfaces:
 
-👨‍✈️ Driver
+ Driver
 Shares live GPS every few seconds
 The backend stores the location in MySQL
 The system logs arrival when bus reaches within 50m radius of campus
 
-🎓 Student
+ Student
 Can select their route number
 Sees bus movement LIVE on Google Maps
 Updated every few seconds
 
-🛠️ Admin
+Admin
 Manage buses, drivers, routes
 View arrival logs
 Monitor live status
 
-⭐ 2. Features
+2. Features
 🚍 Live Bus Tracking
 Drivers send continuous GPS coordinates which are displayed to students in real-time.
 🛰 GPS Sharing
