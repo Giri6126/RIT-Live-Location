@@ -39,7 +39,7 @@ Monitor live status
 2. Features
 Live Bus Tracking
 Drivers send continuous GPS coordinates which are displayed to students in real-time.
-🛰 GPS Sharing
+GPS Sharing
 Driver page uses the browser’s GPS API to capture location.
 
 📡 REST API
