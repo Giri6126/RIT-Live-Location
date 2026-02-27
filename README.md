@@ -42,7 +42,7 @@ Drivers send continuous GPS coordinates which are displayed to students in real-
 GPS Sharing
 Driver page uses the browser’s GPS API to capture location.
 
- REST API
+REST API
 Clean Flask endpoints for live location updates and fetching latest bus location.
 
 🧭 Haversine Distance Calculation
