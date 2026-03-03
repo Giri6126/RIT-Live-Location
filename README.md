@@ -45,7 +45,7 @@ Driver page uses the browser’s GPS API to capture location.
 REST API
 Clean Flask endpoints for live location updates and fetching latest bus location.
 
- Haversine Distance Calculation
+Haversine Distance Calculation
 Used to check when the bus reaches college (arrival logs).
 
 🗺 Google Maps Integration
