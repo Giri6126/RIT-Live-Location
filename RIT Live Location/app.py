@@ -47,25 +47,48 @@ def admin_page():
 @app.route("/api/update_location", methods=["POST"])
 def update_location():
     data = request.get_json()
-    print("Received JSON:", data)  # <--- debug
+    print("Received JSON:", data)
 
     bus_id = data.get("bus_id")
     latitude = data.get("latitude")
     longitude = data.get("longitude")
 
     if bus_id is None or latitude is None or longitude is None:
-        return jsonify({"status":"error","message":"Missing fields"}), 400
+        return jsonify({"status": "error", "message": "Missing fields"}), 400
 
     try:
         latitude = float(latitude)
         longitude = float(longitude)
+    except:
+        return jsonify({"status": "error", "message": "Invalid coordinates"}), 400
+
+    conn = None
+    cursor = None
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "INSERT INTO live_locations (bus_id, latitude, longitude) VALUES (%s, %s, %s)",
+            (bus_id, latitude, longitude)
+        )
+
+        conn.commit()
+
+        return jsonify({"status": "success", "message": "Location updated"})
+
     except Exception as e:
-        print("Error converting lat/lon:", e)
-        return jsonify({"status":"error","message":"Invalid latitude/longitude"}), 400
+        if conn:
+            conn.rollback()
+        print("DB ERROR:", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
-    print("Bus:", bus_id, "Lat:", latitude, "Lon:", longitude)
-    ...
-
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 # ---------------------------
 # API: Get latest bus location
@@ -116,15 +139,6 @@ def get_arrival(bus_id):
         return jsonify({"status": "success", "arrival_time": result["arrival_time"]})
     return jsonify({"status": "pending", "message": "Bus has not arrived yet"})
 
-import mysql.connector
-
-def get_db_connection():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Giri2006@",
-        database="rit_transport"
-    )
 
 # ---------------------------
 # RUN FLASK APP
