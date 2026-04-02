@@ -48,7 +48,7 @@ Clean Flask endpoints for live location updates and fetching latest bus location
 Haversine Distance Calculation
 Used to check when the bus reaches college (arrival logs).
 
-🗺 Google Maps Integration
+Google Maps Integration
 Students get a clean, smooth, interactive map showing bus movement.
 
 🗄 MySQL Database
