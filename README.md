@@ -1,142 +1,176 @@
-RIT Live Bus Tracking System
+# RIT Live Location — Setup & Run Guide
 
-Real-time bus tracking system for Rajalakshmi Institute of Technology (RIT) — built using Flask (Python), MySQL, HTML/CSS, and JavaScript.
-This project enables drivers to share live GPS, and students to track their bus in real-time.
+## Prerequisites
 
-Table of Contents
-Overview
-Features
-Project Architecture
-Folder Structure
-Tech Stack
-API Endpoints
-Database Structure
-Setup Instructions
-How the System Works (Full Flow)
-Contribution Guide
+| Tool | Install from |
+|---|---|
+| Python 3.10+ | https://python.org |
+| MySQL 8.0+ | https://dev.mysql.com/downloads/ |
+| Node.js 18+ | https://nodejs.org |
 
-Future Enhancements
+---
 
- 1. Overview
-This project solves a real problem for college students — no more waiting for the bus blindly.
-The system has three interfaces:
+## 1. Database Setup
 
- Driver
-Shares live GPS every few seconds
-The backend stores the location in MySQL
-The system logs arrival when bus reaches within 50m radius of campus
+Open MySQL and run the schema file **once**:
 
- Student
-Can select their route number
-Sees bus movement LIVE on Google Maps
-Updated every few seconds
+```sql
+-- In MySQL Workbench or mysql CLI:
+source D:/git/RIT Live Location/rit_transport.sql
+```
 
-Admin
-Manage buses, drivers, routes
-View arrival logs
-Monitor live status
+This creates the `rit_transport` database with all tables and inserts 3 sample buses (RIT-01, RIT-02, RIT-03) all with password `1234`.
 
-2. Features
-Live Bus Tracking
-Drivers send continuous GPS coordinates which are displayed to students in real-time.
-GPS Sharing
-Driver page uses the browser’s GPS API to capture location.
+> **If you already have the old schema**, run this migration to add the new columns:
+> ```sql
+> USE rit_transport;
+> ALTER TABLE buses ADD COLUMN IF NOT EXISTS password VARCHAR(255) NOT NULL DEFAULT '1234';
+> CREATE TABLE IF NOT EXISTS route_stops (
+>     id INT AUTO_INCREMENT PRIMARY KEY,
+>     route_id INT NOT NULL,
+>     stop_order INT NOT NULL DEFAULT 0,
+>     latitude DECIMAL(10,8) NOT NULL,
+>     longitude DECIMAL(11,8) NOT NULL,
+>     FOREIGN KEY (route_id) REFERENCES routes(route_id) ON DELETE CASCADE
+> );
+> ```
 
-REST API
-Clean Flask endpoints for live location updates and fetching latest bus location.
+---
 
-Haversine Distance Calculation
-Used to check when the bus reaches college (arrival logs).
+## 2. Configure Database Credentials
 
-Google Maps Integration
-Students get a clean, smooth, interactive map showing bus movement.
+Edit `config.py` if your MySQL credentials differ from the defaults:
 
-🗄 MySQL Database
-Stores bus info, live locations, and arrival logs.
+```python
+conn = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="YOUR_PASSWORD",   # ← change this
+    database="rit_transport"
+)
+```
 
-🏗 3. Project Architecture (Backend + Frontend)
-Backend (Flask):
-API receives location (/api/update_location)
-Validates data
-Stores in MySQL
-Applies Haversine formula
-Detects arrival within 50m
-Sends JSON response back to frontend
+---
 
-Frontend (HTML + JS):
+## 3. Install Python Dependencies
 
-Driver Page:
-Gets current GPS
-Sends it to backend using fetch() API
-Start/Stop sharing buttons
+```bash
+pip install flask flask-cors mysql-connector-python
+```
 
-Student Page:
-Loads Google Map
-Fetches latest location
-Updates marker position live
+Or using the requirements file:
 
-Database (MySQL):
-buses → route, bus number
-live_locations → every GPS update
-arrival_logs → arrival timestamps
+```bash
+pip install -r requirement.txt
+```
 
-4. Folder Structure
+---
 
-RIT-Live-Location/
-│
-├── app.py                     # Flask backend
-├── config.py                  # DB connection config
-├── requirements.txt           # Python dependencies
-├── README.md                  # Project documentation
-│
-├── templates/                 # Frontend HTML
-│   ├── base.html
-│   ├── index.html
-│   ├── driver.html
-│   ├── student.html
-│   └── admin.html
-│
-├── static/
-│   ├── css/
-│   │    └── styles.css
-│   ├── js/
-│   │    ├── driver.js
-│   │    ├── student.js
-│   │    └── admin.js
-│   └── images/
-│        ├── bus.png
-│        └── driver.png
-│
-└── rit_transport.sql          # MySQL database file
+## 4. Start the Flask Backend
 
-🧰 5. Tech Stack
+```bash
+cd "D:/git/RIT Live Location"
+python app.py
+```
 
-Backend
-Python
-Flask
-MySQL
-Frontend
-HTML
-CSS
-JavaScript
-Google Maps API
+You should see:
+```
+🚀 Starting RIT Live Location backend on http://127.0.0.1:5000
+ * Running on http://0.0.0.0:5000
+```
 
-How the System Works (Full Flow Summary)
+---
 
-Driver Side
-Driver chooses bus
-Clicks Start Sharing
-Browser sends GPS to backend every 5 seconds
-Backend inserts into MySQL
-If bus reaches within 50m → arrival logged
-Student Side
-Student chooses bus route
-Google Map loads
-JS fetches new location every few seconds
-Bus marker animates smoothly on map
-Admin Side
-View all buses
-View live locations
-Arrivals
-Manage master data
+## 5. Install Frontend Dependencies
 
+```bash
+cd "D:/git/RIT Live Location"
+npm install
+```
+
+---
+
+## 6. Start the React Frontend
+
+```bash
+npm run dev
+```
+
+Frontend runs at: **http://localhost:8080**
+
+---
+
+## 7. Using the Application
+
+### As a Student
+1. Open http://localhost:8080
+2. Click **Student Access**
+3. The map shows all active buses updated every 5 seconds
+
+### As a Driver
+1. Open http://localhost:8080
+2. Click **Driver Login**
+3. Select your bus (e.g. RIT-01) and enter the password (`1234` by default)
+4. Click **Start Sharing Location** — your GPS is sent to the backend every 5 seconds
+
+### As Admin
+1. Open http://localhost:8080
+2. Click **Admin Login**
+3. View the live map, manage buses, routes, and arrival logs
+
+---
+
+## API Reference
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/update_location` | Driver sends GPS coords |
+| POST | `/api/driver/login` | Driver authenticates |
+| GET | `/api/get_all_locations` | Latest position of each bus |
+| GET | `/api/get_routes` | Route polyline coordinates |
+| GET | `/api/arrival_logs` | Recent college arrivals |
+| GET | `/api/eta/<bus_id>` | ETA to college |
+| GET | `/api/admin/buses` | All buses |
+| POST | `/api/admin/add_bus` | Add a bus |
+| DELETE | `/api/admin/delete_bus` | Remove a bus |
+| POST | `/api/admin/add_route` | Add a route |
+| DELETE | `/api/admin/delete_route` | Remove a route |
+| POST | `/api/admin/update_bus_password` | Change bus password |
+
+---
+
+## Environment Variables
+
+The frontend reads `VITE_API_URL` from `.env`:
+
+```
+VITE_API_URL=http://127.0.0.1:5000
+```
+
+Copy `.env.example` to `.env` if it doesn't exist yet.
+
+---
+
+## Architecture
+
+```
+Browser (React + Leaflet)          Flask (Python)           MySQL
+      port 8080           ←CORS→      port 5000          rit_transport DB
+         │                               │
+         │  GET /api/get_all_locations   │  SELECT latest locations
+         │  POST /api/update_location    │  INSERT live_locations
+         │  POST /api/driver/login       │  SELECT buses WHERE password
+         └───────────────────────────────┘
+```
+
+---
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| `CORS error` in browser console | Make sure `python app.py` is running |
+| `DB connection failed` in Flask logs | Check MySQL is running and credentials in `config.py` |
+| Map shows demo data only | Backend is unreachable — check port 5000 |
+| Driver login fails | Ensure `buses.password` column exists (run migration above) |
+| `npm: not recognized` | Install Node.js from https://nodejs.org |
