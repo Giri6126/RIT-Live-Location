@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Student – Track Live Bus</h2>
+
+<p>Select your route number:</p>
+
+<select id="routeSelect">
+    <option value="101">RIT-12</option>
+    <option value="102">RIT-07</option>
+    <option value="103">RIT-19</option>
+</select>
+
+<br><br>
+
+<div id="map" style="height: 500px; width: 100%;"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<script src="{{ url_for('static', filename='js/student.js') }}"></script>
+{% endblock %}

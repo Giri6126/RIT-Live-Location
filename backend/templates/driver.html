@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Driver – Share Live Location</h2>
+
+<p>Select your bus from the dropdown:</p>
+
+<select id="busId">
+    <option value="101">RIT-12</option>
+    <option value="102">RIT-07</option>
+    <option value="103">RIT-19</option>
+</select>
+
+<br><br>
+
+<button id="startBtn" style="padding: 10px 20px;">Start Sharing Location</button>
+<button id="stopBtn" style="padding: 10px 20px; margin-left: 10px;">Stop Sharing Location</button>
+
+<p id="statusMsg" style="margin-top: 15px; color: green;"></p>
+
+<script src="{{ url_for('static', filename='js/driver.js') }}"></script>
+{% endblock %}
