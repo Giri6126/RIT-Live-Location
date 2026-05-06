@@ -35,7 +35,7 @@ This creates the `rit_transport` database with all tables and inserts 3 sample b
 > );
 > ```
 
----
+
 
 ## 2. Configure Database Credentials
 
