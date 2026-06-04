@@ -90,7 +90,7 @@ npm install
 
 ---
 
-## 6. Start the React Frontend
+# 6. Start the React Frontend
 
 ```bash
 npm run dev
