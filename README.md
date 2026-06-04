@@ -113,7 +113,7 @@ Frontend runs at: **http://localhost:8080**
 3. Select your bus (e.g. RIT-01) and enter the password (`1234` by default)
 4. Click **Start Sharing Location** — your GPS is sent to the backend every 5 seconds
 
-### As Admin
+## As Admin
 1. Open http://localhost:8080
 2. Click **Admin Login**
 3. View the live map, manage buses, routes, and arrival logs
