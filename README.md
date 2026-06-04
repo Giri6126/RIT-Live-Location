@@ -10,7 +10,7 @@
 
 ---
 
-## 1. Database Setup
+# 1. Database Setup
 
 Open MySQL and run the schema file **once**:
 
