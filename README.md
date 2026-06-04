@@ -151,7 +151,7 @@ Copy `.env.example` to `.env` if it doesn't exist yet.
 
 ---
 
-## Architecture
+# Architecture
 
 ```
 Browser (React + Leaflet)          Flask (Python)           MySQL
