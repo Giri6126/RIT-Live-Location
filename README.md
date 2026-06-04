@@ -12,7 +12,7 @@
 
 # 1. Database Setup
 
-Open MySQL and run the schema file **once**:
+Open MySQL and run the schema file once**:
 
 ```sql
 -- In MySQL Workbench or mysql CLI:
