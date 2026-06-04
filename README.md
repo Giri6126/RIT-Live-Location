@@ -21,7 +21,7 @@ source D:/git/RIT Live Location/rit_transport.sql
 
 This creates the `rit_transport` database with all tables and inserts 3 sample buses (RIT-01, RIT-02, RIT-03) all with password `1234`.
 
-> **If you already have the old schema**, run this migration to add the new columns:
+> If you already have the old schema**, run this migration to add the new columns:
 > ```sql
 > USE rit_transport;
 > ALTER TABLE buses ADD COLUMN IF NOT EXISTS password VARCHAR(255) NOT NULL DEFAULT '1234';
