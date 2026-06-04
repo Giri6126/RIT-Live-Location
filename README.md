@@ -1,4 +1,4 @@
-RIT Live Location — Setup & Run Guide
+#RIT Live Location — Setup & Run Guide
 
 #Prerequisites
 
