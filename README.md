@@ -66,7 +66,7 @@ pip install -r requirement.txt
 
 ---
 
-## 4. Start the Flask Backend
+# 4. Start the Flask Backend
 
 ```bash
 cd "D:/git/RIT Live Location"
