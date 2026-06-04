@@ -52,7 +52,7 @@ conn = mysql.connector.connect(
 
 ---
 
-## 3. Install Python Dependencies
+# 3. Install Python Dependencies
 
 ```bash
 pip install flask flask-cors mysql-connector-python
