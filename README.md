@@ -1,6 +1,6 @@
 RIT Live Location — Setup & Run Guide
 
-# Prerequisites
+#Prerequisites
 
 | Tool | Install from |
 |---|---|
