@@ -81,7 +81,7 @@ You should see:
 
 ---
 
-## 5. Install Frontend Dependencies
+# 5. Install Frontend Dependencies
 
 ```bash
 cd "D:/git/RIT Live Location"
