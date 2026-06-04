@@ -107,7 +107,7 @@ Frontend runs at: **http://localhost:8080**
 2. Click **Student Access**
 3. The map shows all active buses updated every 5 seconds
 
-### As a Driver
+## As a Driver
 1. Open http://localhost:8080
 2. Click **Driver Login**
 3. Select your bus (e.g. RIT-01) and enter the password (`1234` by default)
